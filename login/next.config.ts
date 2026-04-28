@@ -8,25 +8,28 @@ const nextConfig: NextConfig = {
   },
   async rewrites() {
     return [
-      // 🔹 HOME assets
+      // HOME assets
       {
         source: '/home/_next/:path*',
-        destination: 'http://home:3000/_next/:path*', // nome do serviço Docker
+        destination: 'http://localhost:3002/_next/:path*',
       },
-      // 🔹 HOME páginas
+
+      // HOME páginas
       {
         source: '/home/:path*',
-        destination: 'http://home:3000/:path*',
+        destination: 'http://localhost:3002/:path*',
       },
-      // 🔹 EXTRATO assets
+
+      // EXTRATO assets
       {
         source: '/extrato/_next/:path*',
-        destination: 'http://extrato:3000/_next/:path*',
+        destination: 'http://localhost:3003/_next/:path*',
       },
-      // 🔹 EXTRATO páginas
+
+      // EXTRATO páginas
       {
         source: '/extrato/:path*',
-        destination: 'http://extrato:3000/:path*',
+        destination: 'http://localhost:3003/:path*',
       },
     ];
   },
