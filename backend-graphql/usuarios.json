@@ -1,0 +1,29 @@
+{
+  "usuarios": [
+    {
+      "id": "1778087591006",
+      "email": "demo@mfbank.com",
+      "nome": "Usuário Demonstração",
+      "password": "$2b$10$Eza0.Wn6BEIqkqoLN8NKpOE5Ej1v7RscyIdd3R9JWveH8EP8hDPI6",
+      "createdAt": "2026-05-06T17:13:11.006Z",
+      "ultimoAcesso": "2026-05-07T20:48:01.329Z"
+    },
+    {
+      "id": "1778087882664",
+      "email": "teste@teste.com",
+      "nome": "Usuário Teste",
+      "password": "$2b$10$cEE0Z5z0UY8iVDjCaGPjqeQcQWGuiLGG9UmCBGdGfRXeSbpUPgjgm",
+      "createdAt": "2026-05-06T17:18:02.664Z",
+      "ultimoAcesso": "2026-05-06T17:18:18.678Z"
+    },
+    {
+      "id": "1778186675628",
+      "email": "seuemail@exemplo.com",
+      "nome": "Seu Nome",
+      "password": "$2b$10$R/8NyGZBZBSZ5bPOLmf/MOSFKMbb/haBIFT0i/8zNIaSnDwHDngA2",
+      "createdAt": "2026-05-07T20:44:35.628Z",
+      "ultimoAcesso": null,
+      "role": "user"
+    }
+  ]
+}

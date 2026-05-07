@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./page.module.css";
-import { ensureUserExists, login as loginService } from "@/services/auth";
+import { login as loginService } from "@/services/auth";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -10,23 +10,15 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-  ensureUserExists();
-}, []);
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
     setLoading(true);
 
     try {
-      const data = await loginService(email, password);
-      const token = data.result.token;
-
-      // 🔐 CONTRATO GLOBAL DE AUTH
-      localStorage.setItem("auth_token", token);
-      localStorage.setItem("auth_user", email);
-
+      await loginService(email, password);
+      // O token já está no cookie httpOnly, não precisa salvar nada no localStorage
+      
       // 🚀 REDIRECIONA PARA O HOME-MF
       window.location.href = "/home";
     } catch (err: any) {
