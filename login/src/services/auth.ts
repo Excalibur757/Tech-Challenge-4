@@ -1,28 +1,57 @@
 // /login/services/auth.ts
 const GRAPHQL_URL = 'http://localhost:3000/graphql';
 
+interface LoginStatus {
+  attempts: number;
+  remainingAttempts: number;
+  isLocked: boolean;
+  lockoutTimeRemaining: number;
+}
+
 async function graphqlRequest(query: string, variables?: any): Promise<any> {
   const response = await fetch(GRAPHQL_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    credentials: 'include', // ESSENCIAL: envia e recebe cookies automagicamente
+    credentials: 'include',
     body: JSON.stringify({ query, variables })
   });
 
   if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Erro HTTP: ${response.status} - ${errorText}`);
+    // Erro HTTP - isso é problema de servidor, não do usuário
+    console.error('[DEBUG] Erro HTTP:', response.status);
+    throw new Error('Erro interno do servidor. Tente novamente mais tarde.');
   }
 
   const result = await response.json();
   
   if (result.errors) {
-    throw new Error(result.errors[0].message);
+    // AQUI ESTÁ O PONTO CHAVE!
+    // O GraphQL já retorna a mensagem amigável no errors[0].message
+    // Não precisamos adicionar nada, só repassar a mensagem limpa
+    const errorMessage = result.errors[0].message;
+    console.error('[DEBUG] GraphQL Error:', errorMessage);
+    throw new Error(errorMessage); // Mensagem já é amigável (ex: "Email ou senha inválidos. Você tem mais 3 tentativas.")
   }
   
   return result.data;
+}
+
+export async function getLoginStatus(email: string): Promise<LoginStatus> {
+  const query = `
+    query GetLoginStatus($email: String!) {
+      getLoginStatus(email: $email) {
+        attempts
+        remainingAttempts
+        isLocked
+        lockoutTimeRemaining
+      }
+    }
+  `;
+
+  const data = await graphqlRequest(query, { email });
+  return data.getLoginStatus;
 }
 
 export async function login(email: string, password: string) {
@@ -37,6 +66,8 @@ export async function login(email: string, password: string) {
           nome
           ultimoAcesso
         }
+        remainingAttempts
+        lockoutTimeRemaining
       }
     }
   `;
@@ -44,10 +75,10 @@ export async function login(email: string, password: string) {
   const data = await graphqlRequest(query, { email, senha: password });
   
   if (!data?.login?.success) {
+    // Isso não deve acontecer porque o GraphQL já lançou erro
     throw new Error(data?.login?.message || 'Erro ao fazer login');
   }
 
-  // Não retorna mais token, pois ele está no cookie
   return {
     user: data.login.user
   };
@@ -64,7 +95,6 @@ export async function logout() {
   `;
 
   await graphqlRequest(query);
-  // Não precisa limpar localStorage pois não usamos mais
 }
 
 export async function isAuthenticated() {

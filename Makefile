@@ -5,6 +5,7 @@ dev:
 	@echo "🏠 Home MF na porta 3002"
 	@echo "💰 Extrato MF na porta 3003"
 	@echo ""
+
 	cd backend-graphql && npm run dev & \
 	cd login && npm run dev -- -p 3001 & \
 	cd home && npm run dev -- -p 3002 & \
@@ -23,13 +24,18 @@ dev-home:
 dev-extrato:
 	cd extrato && npm run dev -- -p 3003
 
-# Parar todos os processos
 stop:
 	@echo "🛑 Parando todos os serviços..."
 	@lsof -ti:3000,3001,3002,3003 | xargs kill -9 || true
 	@echo "✅ Todos os serviços parados"
 
-# Mostrar status dos serviços
+clean:
+	@echo "🧹 Limpando processos Node..."
+	@pkill -f node || true
+	@echo "✅ Processos finalizados"
+
+restart: stop dev
+
 status:
 	@echo "📊 Status dos serviços:"
 	@echo "Backend (3000):" && curl -s http://localhost:3000/health || echo "  ❌ Offline"
