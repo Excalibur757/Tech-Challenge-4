@@ -1,6 +1,8 @@
 const express = require('express');
 
-const { graphqlHTTP } = require('express-graphql');
+const {
+    createHandler
+} = require('graphql-http/lib/use/express');
 
 const schema =
     require('../graphql/schema');
@@ -18,15 +20,16 @@ const router = express.Router();
 router.use(
     '/graphql',
 
-    graphqlHTTP((req, res) => ({
+    createHandler({
         schema,
 
         rootValue: root,
 
-        graphiql: true,
-
-        context: { req, res }
-    }))
+        context: (req) => ({
+            req: req.raw,
+            res: req.raw.res
+        })
+    })
 );
 
 // Health check

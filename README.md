@@ -66,9 +66,14 @@ Este projeto foi construído utilizando as seguintes tecnologias obrigatórias e
 1.  No terminal digite:
 
     ```bash
-    make dev
+    npm install
     ```
-2. Abra [http://localhost:3001](http://localhost:3001) em seu navegador para ver a aplicação.
+2.  No terminal digite:
+
+    ```bash
+    npm run dev
+    ```
+3. Abra [http://localhost:3001](http://localhost:3001) em seu navegador para ver a aplicação.
 <br />
 
 ### Credenciais de login
@@ -77,11 +82,11 @@ Este projeto foi construído utilizando as seguintes tecnologias obrigatórias e
 
   1. Email:
     ```bash
-    aluno@teste.com
+    demo@mfbank.com
     ```
   2. Senha:
     ```bash
-    123456
+    demo123
     ```
 
 ## 🎥 Vídeo
