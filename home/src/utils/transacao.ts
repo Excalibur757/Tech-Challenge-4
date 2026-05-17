@@ -1,5 +1,6 @@
 import { ExtratoItemType, FormularioType } from "@/types/iFormulario";
 import dayjs from "dayjs";
+import { listaExtratos } from "../../public/assets/mock";
 
 export type ExtratoMensalType = {
   mes: string;
@@ -60,3 +61,49 @@ export const removerTransacao = (
     }))
     .filter((extratoMes) => extratoMes.extratos.length > 0);
 };
+
+export function calcularSaldo(extratos: typeof listaExtratos) {
+    let saldo = 0;
+
+    extratos.forEach((mes) => {
+      mes.extratos.forEach((item) => {
+        if (item.tipo === "deposito" || item.tipo === "estorno") {
+          saldo += item.valor;
+        } else {
+          saldo -= item.valor;
+        }
+      });
+    });
+
+    return saldo;
+  }
+
+export function validarValor(valor: number) {
+  if (valor <= 0) return "O valor deve ser maior que zero";
+  if (valor > 100000) return "Valor muito alto";
+  return null;
+}
+
+export function validarDescricao(texto: string) {
+  if (texto.trim().length < 3)
+    return "A descrição deve ter pelo menos 3 caracteres";
+  return null;
+}
+
+export function validarAnexo(file: File) {
+  const tiposPermitidos = [
+    "application/pdf",
+    "image/png",
+    "image/jpeg",
+  ];
+
+  if (!tiposPermitidos.includes(file.type)) {
+    return "Formato inválido. Envie PDF, PNG ou JPG.";
+  }
+
+  if (file.size > 5 * 1024 * 1024) {
+    return "O arquivo deve ter no máximo 5MB.";
+  }
+
+  return null;
+}
