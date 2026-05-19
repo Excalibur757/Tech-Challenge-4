@@ -4,7 +4,7 @@ import { palette } from '@/styles/theme/colors';
 import { radii } from '@/styles/theme/radii';
 import { spacing } from '@/styles/theme/spacing';
 import { fontSizes, fontWeights } from '@/styles/theme/typography';
-import { ExtratoMensalType } from '@/utils/transacao';
+import { ExtratoMensalType } from '@/types/!Extrato';
 
 interface GraficoProps {
   extratos: ExtratoMensalType;

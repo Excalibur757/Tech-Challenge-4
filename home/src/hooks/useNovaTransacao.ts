@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { validarValor, validarDescricao, validarAnexo } from "@/utils/transacao";
+import { validarValor } from "@/domain/transacao/validations/validarValor";
+import { validarDescricao } from "@/domain/transacao/validations/validarDescricao";
+import { validarAnexo } from "@/domain/transacao/validations/validarAnexo";
 
 interface UseNovaTransacaoProps {
   onTransacaoAdicionada: (transacao: any) => void;

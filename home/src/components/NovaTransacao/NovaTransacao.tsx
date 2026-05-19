@@ -10,7 +10,7 @@ import Botao from "../Botao/Botao";
 import UploadModal from "../UploadModal/UploadModal";
 import { useNovaTransacao } from "../../hooks/useNovaTransacao";
 import styles from "./NovaTransacao.module.css";
-import { validarAnexo } from "@/utils/transacao";
+import { validarAnexo } from "@/domain/transacao/validations/validarAnexo";
 
 interface NovaTransacaoProps {
   onTransacaoAdicionada: (transacao: any) => void;

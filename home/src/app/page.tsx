@@ -2,23 +2,78 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { useTransacao } from "@/context/transacao/TransacaoContext";
 import styles from "./page.module.css";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import SaldoContainer from "@/components/SaldoContainer/SaldoContainer";
-import ExtratoContainer from "@/components/ExtratoContainer/ExtratoContainer";
-import { listaExtratos } from "../../public/assets/mock";
-import { adicionarTransacao } from "@/utils/transacao";
 import Alerta from "@/components/Alerta/Alerta";
-import FinancialCharts from "@/components/FinancialCharts/FinancialCharts";
-import { calcularSaldo } from "@/utils/transacao";
-import NovaTransacao from "@/components/NovaTransacao/NovaTransacao";
+import dynamic from "next/dynamic";
+import LoadingCard from "@/components/LoadingCard/LoadingCard";
+import { delayImport } from "@/utils/delayImport";
+
+const FinancialCharts = dynamic(
+  () =>
+    delayImport(
+      () =>
+        import(
+          "@/components/FinancialCharts/FinancialCharts"
+        ),
+      600
+    ),
+  {
+    loading: () => (
+      <LoadingCard texto="Carregando gráficos financeiros..." />
+    ),
+  }
+);
+
+const NovaTransacao = dynamic(
+  () =>
+    delayImport(
+      () =>
+        import(
+          "@/components/NovaTransacao/NovaTransacao"
+        ),
+      800
+    ),
+  {
+    loading: () => (
+      <LoadingCard texto="Preparando formulário..." />
+    ),
+  }
+);
+
+const ExtratoContainer = dynamic(
+  () =>
+    delayImport(
+      () =>
+        import(
+          "@/components/ExtratoContainer/ExtratoContainer"
+        ),
+      500
+    ),
+  {
+    loading: () => (
+      <LoadingCard texto="Carregando extratos..." />
+    ),
+  }
+);
 
 export default function Home() {
   const { token, loading, userName } = useAuth();
+
+  const {
+  extratos,
+  saldo,
+  adicionarNovaTransacao,
+  setExtratos,
+} = useTransacao();
+
   const [mostrarAlerta, setMostrarAlerta] = useState<boolean>(false);
-  const firstName = userName ? userName.split("@")[0] : "Usuário";
-  const [saldo, setSaldo] = useState<number>(() => calcularSaldo(listaExtratos));
-  const [extratos, setExtratos] = useState(listaExtratos);
+
+  const firstName = userName
+    ? userName.split("@")[0]
+    : "Usuário";
 
   useEffect(() => {
     if (!loading && !token) {
@@ -26,13 +81,9 @@ export default function Home() {
     }
   }, [token, loading]);
 
-  useEffect(() => {
-    setSaldo(calcularSaldo(extratos));
-  }, [extratos]);
-
   const handleTransactionSubmit = (novaTransacao: any) => {
-    const novosExtratos = adicionarTransacao(extratos, novaTransacao);
-    setExtratos(novosExtratos);
+    adicionarNovaTransacao(novaTransacao);
+
     setMostrarAlerta(true);
 
     setTimeout(() => {
@@ -41,41 +92,46 @@ export default function Home() {
   };
 
   if (loading) {
-    return <p>Carregando autenticação...</p>;
+    return (
+      <div className={styles.loadingWrapper}>
+        <LoadingCard texto="Verificando autenticação..." />
+      </div>
+    );
   }
 
   return (
-    <>
-      <div className={styles.containerTudo}>
-        <Sidebar width={"100%"} height="" />
+    <div className={styles.containerTudo}>
+      <Sidebar width={"100%"} height="" />
 
-        <div className={styles.conteudoContainer}>
-          {mostrarAlerta && (
-            <Alerta
-              tipo="sucesso"
-              mensagem="🎉 Sucesso! Transação adicionada com êxito."
-            />
-          )}
-          
-          <SaldoContainer
-            height="40%"
-            key={firstName}
-            firstName={firstName}
-            valor={saldo}
+      <div className={styles.conteudoContainer}>
+        {mostrarAlerta && (
+          <Alerta
+            tipo="sucesso"
+            mensagem="🎉 Sucesso! Transação adicionada com êxito."
           />
+        )}
 
-          <div className={styles.financialSection}>
-            <FinancialCharts extratos={extratos} />
-          </div>
-          
-          <NovaTransacao 
-            onTransacaoAdicionada={handleTransactionSubmit}
-            loading={loading}
-          />
+        <SaldoContainer
+          height="40%"
+          key={firstName}
+          firstName={firstName}
+          valor={saldo}
+        />
+
+        <div className={styles.financialSection}>
+          <FinancialCharts extratos={extratos} />
         </div>
 
-        <ExtratoContainer extratos={extratos} setExtratos={setExtratos} />
+        <NovaTransacao
+          onTransacaoAdicionada={handleTransactionSubmit}
+          loading={loading}
+        />
       </div>
-    </>
+
+      <ExtratoContainer
+        extratos={extratos}
+        setExtratos={setExtratos}
+      />
+    </div>
   );
 }
