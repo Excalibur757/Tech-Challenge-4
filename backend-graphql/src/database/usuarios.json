@@ -6,7 +6,8 @@
       "nome": "Usuário Demonstração",
       "password": "$2b$10$Eza0.Wn6BEIqkqoLN8NKpOE5Ej1v7RscyIdd3R9JWveH8EP8hDPI6",
       "createdAt": "2026-05-06T17:13:11.006Z",
-      "ultimoAcesso": "2026-05-19T18:06:30.607Z"
+      "ultimoAcesso": "2026-05-20T14:58:18.196Z",
+      "role": "user"
     },
     {
       "id": "1778087882664",
@@ -14,7 +15,8 @@
       "nome": "Usuário Teste",
       "password": "$2b$10$cEE0Z5z0UY8iVDjCaGPjqeQcQWGuiLGG9UmCBGdGfRXeSbpUPgjgm",
       "createdAt": "2026-05-06T17:18:02.664Z",
-      "ultimoAcesso": "2026-05-06T17:18:18.678Z"
+      "ultimoAcesso": "2026-05-06T17:18:18.678Z",
+      "role": "user"
     },
     {
       "id": "1778186675628",
@@ -32,6 +34,15 @@
       "password": "$2a$10$KrmYjOTLmnY0U6Tvvq6b4.yTCjzaIPF8mUKW1cq0.ETY5FXgOlqzK",
       "createdAt": "2026-05-14T12:41:22.932Z",
       "ultimoAcesso": "2026-05-14T12:45:40.183Z",
+      "role": "user"
+    },
+    {
+      "id": "1779280867833",
+      "email": "teste@testando.com",
+      "nome": "Teste",
+      "password": "$2a$10$bTajqDTj0Mh4eKSAvsYlXu35Nd91brenqJ3AB.JtCYHbvK0uGq7ga",
+      "createdAt": "2026-05-20T12:41:07.833Z",
+      "ultimoAcesso": "2026-05-20T14:55:28.740Z",
       "role": "user"
     }
   ]

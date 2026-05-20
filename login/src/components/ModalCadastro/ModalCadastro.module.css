@@ -1,0 +1,162 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 999;
+  padding: 24px;
+
+  backdrop-filter: blur(4px);
+}
+
+.modal {
+  width: 100%;
+  max-width: 420px;
+
+  background: #f8f8f8;
+
+  border-radius: 16px;
+  border: 1px solid #CBCBCB;
+
+  padding: 32px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+
+  animation: aparecer 0.2s ease;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #171717;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.input {
+  width: 100%;
+
+  padding: 12px 14px;
+
+  border-radius: 8px;
+  border: 1px solid #CBCBCB;
+
+  background: white;
+
+  font-size: 0.95rem;
+  color: #171717;
+
+  transition: 0.2s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #94b49f;
+  box-shadow: 0 0 0 3px rgba(148, 180, 159, 0.15);
+}
+
+.input::placeholder {
+  color: #888;
+}
+
+.message {
+  padding: 12px;
+  border-radius: 8px;
+
+  font-size: 0.9rem;
+  line-height: 1.4;
+
+  background: #E4EDE3;
+  color: #171717;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.cancelButton {
+  flex: 1;
+
+  padding: 12px 14px;
+
+  border-radius: 8px;
+  border: 1px solid #CBCBCB;
+
+  background: #E4EDE3;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+
+  color:#171717;
+  font-weight: 300;
+}
+
+.cancelButton:hover {
+  opacity: 0.7;
+}
+
+.submitButton {
+  flex: 1;
+
+  padding: 12px 14px;
+
+  border-radius: 8px;
+  border: none;
+
+  background: #E4EDE3;
+  color: #171717;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.submitButton:hover:not(:disabled) {
+  opacity: 0.7;
+}
+
+.submitButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

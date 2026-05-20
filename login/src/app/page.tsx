@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import styles from "./page.module.css";
 import { login as loginService, getLoginStatus } from "@/services/auth";
+import ModalCadastro from "@/components/ModalCadastro/ModalCadastro";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -12,7 +13,8 @@ export default function LoginPage() {
   const [remainingAttempts, setRemainingAttempts] = useState<number | null>(null);
   const [isLocked, setIsLocked] = useState(false);
   const [lockoutTimeRemaining, setLockoutTimeRemaining] = useState(0);
-  
+  const [modalCadastroAberto, setModalCadastroAberto] = useState(false);
+
   // Ref para armazenar o intervalo
   const countdownInterval = useRef<NodeJS.Timeout | null>(null);
 
@@ -175,7 +177,23 @@ export default function LoginPage() {
         >
           {loading ? "Entrando..." : "Entrar"}
         </button>
+
+        <button
+          type="button"
+          className={styles.button} 
+          onClick={() =>
+            setModalCadastroAberto(true)
+          }
+        >
+          Criar conta
+        </button>
       </form>
+      <ModalCadastro
+      aberto={modalCadastroAberto}
+      onClose={() =>
+        setModalCadastroAberto(false)
+      }
+    />
     </main>
   );
 }

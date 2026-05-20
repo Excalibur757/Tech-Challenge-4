@@ -13,7 +13,6 @@ async function start() {
 ║   🚀 Backend GraphQL rodando!                                  ║
 ╠════════════════════════════════════════════════════════════════╣
 ║   📡 Porta: ${PORT}                                            ║
-║   🔗 GraphQL: http://localhost:${PORT}/graphql                 ║
 ║   ✅ Health: http://localhost:${PORT}/health                   ║
 ╚════════════════════════════════════════════════════════════════╝
         `);

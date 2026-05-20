@@ -1,4 +1,3 @@
-// /login/services/auth.ts
 const GRAPHQL_URL = 'http://localhost:3000/graphql';
 
 interface LoginStatus {
@@ -27,12 +26,9 @@ async function graphqlRequest(query: string, variables?: any): Promise<any> {
   const result = await response.json();
   
   if (result.errors) {
-    // AQUI ESTÁ O PONTO CHAVE!
-    // O GraphQL já retorna a mensagem amigável no errors[0].message
-    // Não precisamos adicionar nada, só repassar a mensagem limpa
     const errorMessage = result.errors[0].message;
     console.error('[DEBUG] GraphQL Error:', errorMessage);
-    throw new Error(errorMessage); // Mensagem já é amigável (ex: "Email ou senha inválidos. Você tem mais 3 tentativas.")
+    throw new Error(errorMessage); 
   }
   
   return result.data;
@@ -75,7 +71,6 @@ export async function login(email: string, password: string) {
   const data = await graphqlRequest(query, { email, senha: password });
   
   if (!data?.login?.success) {
-    // Isso não deve acontecer porque o GraphQL já lançou erro
     throw new Error(data?.login?.message || 'Erro ao fazer login');
   }
 
@@ -138,4 +133,25 @@ export async function getMe() {
   } catch (error) {
     return null;
   }
+}
+
+export async function cadastroService(
+  nome: string,
+  email: string,
+  senha: string
+) {
+  const query = `
+    mutation {
+      cadastro(
+        nome: "${nome}",
+        email: "${email}",
+        senha: "${senha}"
+      ) {
+        success
+        message
+      }
+    }
+  `;
+
+  return graphqlRequest(query);
 }

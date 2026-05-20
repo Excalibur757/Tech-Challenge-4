@@ -63,9 +63,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
       }
     `);
+
+    // limpa auth
+    localStorage.removeItem("auth_token");
+    localStorage.removeItem("auth_user");
+
+    // limpa cache dos extratos
+    localStorage.removeItem("extratos");
+
+    // limpa estados
     setToken(null);
     setUserName(null);
-    window.location.href = "http://localhost:3001/";
+
+    // redireciona
+    window.location.href =
+      "http://localhost:3001/";
   };
 
   return (
