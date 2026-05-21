@@ -1,98 +1,202 @@
 <h1 align="center">
-  <a href="https://github.com/Excalibur757/Tech-Challenge-Fase-2">
+  <a href="https://github.com/Excalibur757/Tech-Challenge-Fase-4">
     Tech Challenge - Fase 04
   </a>
 </h1>
 
-A proposta é desenvolver um pacote de melhorias do gerenciador financeiro do projeto passado. Incorporando melhorias de pesquisa, gráficos, paginação, validação e upload, utilizando **Next.js** e **Microfrontends**.
+<p align="center">
+  Aplicação de gerenciamento financeiro desenvolvida com foco em arquitetura moderna, performance, segurança e escalabilidade utilizando <strong>Next.js</strong>, <strong>GraphQL</strong> e <strong>Microfrontends</strong>.
+</p>
 
 <br />
 
 ## 📖 Índice
 
-* 🎯 Sobre o Projeto
-* ✨ Requisitos
-* 🛠️ Tecnologias Utilizadas
-* 🚀 Executando o Projeto
-* 🎥 Vídeo
+- 🎯 Sobre o Projeto
+- ✨ Features
+- 🏗️ Arquitetura
+- ⚡ Performance e Otimização
+- 🔐 Segurança
+- 🛠️ Tecnologias Utilizadas
+- 🚀 Executando o Projeto
+- 🎥 Vídeo
 
 <br />
 
-## 🎯 Sobre o Projeto
+# 🎯 Sobre o Projeto
 
+Este projeto é a evolução do sistema de gerenciamento financeiro desenvolvido nas fases anteriores do Tech Challenge.  
+O objetivo desta fase é aprimorar a aplicação com foco em escalabilidade, modularidade, segurança e performance, aplicando conceitos modernos de arquitetura front-end e boas práticas de organização de código.
 
-<br />
+A aplicação oferece funcionalidades essenciais para controle financeiro, como:
 
-## ✨ Features (Requisitos)
+- Cadastro e autenticação segura de usuários
+- Visualização de saldo e extrato 
+- Filtros avançados e paginação  
+- Persistência de dados em cache  
+- Gráficos financeiros interativos
+- Análise financeira com base no saldo
 
-
-<br />
-
-## 🛠️ Tecnologias Utilizadas
-
-Este projeto foi construído utilizando as seguintes tecnologias obrigatórias e ferramentas:
-
-* [**Next.js**](https://nextjs.org/)**:** Framework React usado para estruturar e organizar o projeto.
-* [**React**](https://reactjs.org/)**:** Biblioteca principal para a construção da interface.
-* **CSS Modules:** Usado para estilos específicos de páginas ou componentes.
-* **Styled-Components:** Usado para criar componentes de UI reutilizáveis e "tokenizados", que formam o núcleo do nosso sistema.
-* **Vercel:** Utilizado para rodar sua aplicação na web.
-* **Microfrontends:** Usado para separar as páginas de um site e torná-las independentes, permitindo atualização e desenvolvimento isolado.
-* **Bootstrap:** Utilizado para agilizar o desenvolvimento do layout macro e para classes utilitárias.
+Toda a estrutura foi reorganizada com princípios inspirados em **Clean Architecture**, garantindo separação clara entre domínio, apresentação e infraestrutura.
 
 <br />
 
-## 🚀 Executando o Projeto
+# ✨ Features
 
-### Pré-requisitos
+- **Arquitetura Moderna:** Estrutura modular e organizada seguindo princípios inspirados em Clean Architecture, garantindo separação clara entre domínio, apresentação e infraestrutura.
 
-* [node](https://nodejs.org/pt-br/download)
+- **Gerenciamento de Estado:** Estado global compartilhado de forma eficiente entre páginas e componentes, com atualização reativa da interface.
 
-### Instalação
+- **Performance e Otimização:** Carregamento inteligente de componentes, cache local, persistência de dados e otimização de cálculos para uma experiência fluida.
 
-1.  Clone o repositório:
+- **Segurança:** Autenticação robusta com proteção contra múltiplas tentativas, armazenamento seguro de credenciais e controle de acesso às páginas restritas.
 
-    ```bash
-    git clone https://github.com/Excalibur757/Tech-Challenge-4.git
-    ```
-2.  Navegue até o diretório do projeto:
+- **Funcionalidades Financeiras:** Cadastro de transações, extrato com filtros avançados (categoria, tipo, valor, datas, busca textual), paginação, cálculo automático de saldo e gráficos interativos.
 
-    ```bash
-    cd Tech-Challenge-4
-    ```
+# 🏗️ Arquitetura
 
-### Executando a aplicação
+O projeto foi estruturado seguindo conceitos inspirados em Clean Architecture:
 
-1.  No terminal digite:
+```bash
+src/
+├── app/
+├── components/
+├── context/
+├── hooks/
+├── domain/
+│   └── useCases/
+├── services/
+├── styles/
+└── utils/
+```
 
-    ```bash
-    npm install
-    ```
-2.  No terminal digite:
+### Separação das responsabilidades
 
-    ```bash
-    npm run dev
-    ```
-3. Abra [http://localhost:3001](http://localhost:3001) em seu navegador para ver a aplicação.
-<br />
-
-### Credenciais de login
-
-* Para ter o acesso, use as seguintes credenciais:
-
-  1. Email:
-    ```bash
-    demo@mfbank.com
-    ```
-  2. Senha:
-    ```bash
-    demo123
-    ```
-
-## 🎥 Vídeo
+| Camada         | Responsabilidade                        |
+| -------------- | --------------------------------------- |
+| Presentation   | Pages e Components                      |
+| Domain         | Regras de negócio e UseCases            |
+| Infrastructure | Cache, autenticação, GraphQL e serviços |
 
 <br />
 
-***
+# ⚡ Performance e Otimização
 
-Feito por **Kevin Santos (RM369050) e Pedro Moura (RM367447).**
+As seguintes estratégias foram aplicadas para melhorar a experiência do usuário:
+
+- Lazy loading de componentes pesados
+- Cache local com `localStorage`
+- Persistência de estado entre páginas
+- Memoização de filtros e cálculos
+- Loading states personalizados
+- Atualizações reativas com hooks
+
+<br />
+
+# 🔐 Segurança
+
+A aplicação implementa:
+
+- Autenticação via GraphQL
+- Verificação de sessão/token
+- Armazenamento de token em cookie
+- Hash de senhas
+- Logout seguro com limpeza de cache
+- Controle de tentativas de login
+- Bloqueio temporário após múltiplas tentativas inválidas
+- Controle de acesso às páginas protegidas
+
+<br />
+
+# 🛠️ Tecnologias Utilizadas
+
+Este projeto foi desenvolvido utilizando:
+
+- [**Next.js**](https://nextjs.org/)
+- [**React**](https://react.dev/)
+- [**TypeScript**](https://www.typescriptlang.org/)
+- **GraphQL**
+- **Context API**
+- **CSS Modules**
+- **Microfrontends**
+- **LocalStorage**
+
+<br />
+
+# 🚀 Executando o Projeto
+
+## 📋 Pré-requisitos
+
+- [Node.js](https://nodejs.org/pt-br/download)
+
+<br />
+
+## 📥 Instalação
+
+### 1. Clone o repositório
+
+```bash
+git clone https://github.com/Excalibur757/Tech-Challenge-Fase-4.git
+```
+
+### 2. Acesse a pasta do projeto
+
+```bash
+cd Tech-Challenge-Fase-4
+```
+
+### 3. Instale as dependências
+
+```bash
+npm install
+```
+
+<br />
+
+# ▶️ Executando a aplicação
+
+```bash
+npm run dev
+```
+
+Abra:
+
+```bash
+http://localhost:3001
+```
+
+<br />
+
+# 🔑 Credenciais de Login
+
+## Atenção
+
+É possível criar sua própria conta, mas caso não queira, utilize as credenciais abaixo:
+
+## Usuário de demonstração
+
+### Email
+
+```bash
+demo@mfbank.com
+```
+
+### Senha
+
+```bash
+demo123
+```
+
+<br />
+
+# 🎥 Vídeo
+
+Adicione aqui o link do vídeo demonstrando a aplicação.
+
+<br />
+
+---
+
+<p align="center">
+  Feito por <strong>Kevin Santos (RM369050)</strong> e <strong>Pedro Moura (RM367447)</strong>.
+</p>

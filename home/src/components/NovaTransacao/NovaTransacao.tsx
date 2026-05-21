@@ -224,12 +224,13 @@ export default function NovaTransacao({ onTransacaoAdicionada, loading = false }
         />
 
         {erroDescricao && (
-          <span style={{ color: "red", fontSize: 12 }}>
+          <span style={{ color: "red", fontSize: 12 , display: 'block', marginTop: 10}}>
             {erroDescricao}
           </span>
         )}
                       
         <Botao
+          margin="32px 0 0 0"
           label="Adicionar nova transação"
           onClick={submeterTransacao}
           backgroundColor={palette.azul700}

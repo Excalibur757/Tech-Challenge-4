@@ -6,7 +6,7 @@
       "nome": "Usuário Demonstração",
       "password": "$2b$10$Eza0.Wn6BEIqkqoLN8NKpOE5Ej1v7RscyIdd3R9JWveH8EP8hDPI6",
       "createdAt": "2026-05-06T17:13:11.006Z",
-      "ultimoAcesso": "2026-05-20T14:58:18.196Z",
+      "ultimoAcesso": "2026-05-21T17:46:05.473Z",
       "role": "user"
     },
     {
@@ -42,7 +42,7 @@
       "nome": "Teste",
       "password": "$2a$10$bTajqDTj0Mh4eKSAvsYlXu35Nd91brenqJ3AB.JtCYHbvK0uGq7ga",
       "createdAt": "2026-05-20T12:41:07.833Z",
-      "ultimoAcesso": "2026-05-20T14:55:28.740Z",
+      "ultimoAcesso": "2026-05-21T17:41:47.175Z",
       "role": "user"
     }
   ]
