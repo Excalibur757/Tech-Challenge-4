@@ -44,6 +44,15 @@
       "createdAt": "2026-05-20T12:41:07.833Z",
       "ultimoAcesso": "2026-05-21T17:41:47.175Z",
       "role": "user"
+    },
+    {
+      "id": "1779388694826",
+      "email": "kevin@teste.com",
+      "nome": "Kevin",
+      "password": "$2a$10$I7seyC2mLd2Z6WJUwH6Tbey1G0oehM2ZQi3dh0KQaCujYush399rq",
+      "createdAt": "2026-05-21T18:38:14.826Z",
+      "ultimoAcesso": "2026-05-21T18:39:50.271Z",
+      "role": "user"
     }
   ]
 }

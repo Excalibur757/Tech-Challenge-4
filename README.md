@@ -1,5 +1,5 @@
 <h1 align="center">
-  <a href="https://github.com/Excalibur757/Tech-Challenge-Fase-4">
+  <a href="https://github.com/Excalibur757/Tech-Challenge-4.git">
     Tech Challenge - Fase 04
   </a>
 </h1>
@@ -136,13 +136,13 @@ Este projeto foi desenvolvido utilizando:
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/Excalibur757/Tech-Challenge-Fase-4.git
+git clone https://github.com/Excalibur757/Tech-Challenge-4.git
 ```
 
 ### 2. Acesse a pasta do projeto
 
 ```bash
-cd Tech-Challenge-Fase-4
+cd Tech-Challenge-4
 ```
 
 ### 3. Instale as dependências
@@ -191,12 +191,15 @@ demo123
 
 # 🎥 Vídeo
 
-Adicione aqui o link do vídeo demonstrando a aplicação.
+Gravamos um vídeo para demonstrar todo o fluxo e as melhorias solicitadas.
+
+➡️ [Assista ao vídeo via Drive](https://drive.google.com/file/d/1TzEBEqlVa5vDavc-KsFyttQyFV344on9/view?usp=sharing).
+➡️ [Assista ao vídeo via YouTube](https://youtu.be/qpuiXdUBLqg).
 
 <br />
 
 ---
 
 <p align="center">
-  Feito por <strong>Kevin Santos (RM369050)</strong> e <strong>Pedro Moura (RM367447)</strong>.
+  Feito por <strong>Kevin Santos (RM369050)</strong>.
 </p>
