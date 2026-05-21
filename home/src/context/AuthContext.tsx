@@ -1,6 +1,17 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
+
+import {
+  verificarTokenService,
+  logoutService,
+} from "@/context/auth/auth.service";
 
 type AuthContextType = {
   token: string | null;
@@ -10,42 +21,74 @@ type AuthContextType = {
   logout: () => void;
 };
 
-
 const AuthContext = createContext<AuthContextType | null>(null);
 
-export function AuthProvider({ children }: { children: ReactNode }) {
+export function AuthProvider({
+  children,
+}: {
+  children: ReactNode;
+}) {
   const [token, setToken] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("auth_token");
-    const storedUser = localStorage.getItem("auth_user");
-    if (storedToken) {
-      setToken(storedToken);
+    async function verificarAuth() {
+      try {
+        const data = await verificarTokenService();
+
+        if (data.verificarToken.success) {
+          setToken("authenticated");
+          setUserName(
+            data.verificarToken.user?.email || null
+          );
+        }
+      } catch (error) {
+        setToken(null);
+        setUserName(null);
+      } finally {
+        setLoading(false);
+      }
     }
-    if (storedUser) {
-      setUserName(storedUser);
-    }
-    setLoading(false);
+
+    verificarAuth();
   }, []);
 
   function login(token: string, userName: string) {
     localStorage.setItem("auth_token", token);
     localStorage.setItem("auth_user", userName);
+
     setToken(token);
     setUserName(userName);
   }
 
-  function logout() {
-    localStorage.removeItem("auth_token");
-    localStorage.removeItem("auth_user");
+  const logout = async () => {
+    await logoutService();
+
+    // Limpa autenticação
     setToken(null);
     setUserName(null);
-  }
+
+    // Limpa cache local
+    localStorage.removeItem("extratos");
+
+    // Limpa outros dados locais
+    localStorage.removeItem("auth_token");
+    localStorage.removeItem("auth_user");
+
+    window.location.href = "http://localhost:3001/";
+  };
 
   return (
-    <AuthContext.Provider value={{ token, userName, loading, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        token,
+        userName,
+        loading,
+        login,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -53,6 +96,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export function useAuth() {
   const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be usado dentro do AuthProvider");
+
+  if (!ctx) {
+    throw new Error(
+      "useAuth must be usado dentro do AuthProvider"
+    );
+  }
+
   return ctx;
 }

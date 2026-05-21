@@ -1,0 +1,20 @@
+{
+  "name": "mf-bank",
+  "private": true,
+  "workspaces": [
+    "backend-graphql",
+    "login",
+    "home",
+    "extrato"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace backend-graphql\" \"npm run dev --workspace login -- -p 3001\" \"npm run dev --workspace home -- -p 3002\" \"npm run dev --workspace extrato -- -p 3003\"",
+    "dev-backend": "npm run dev --workspace backend-graphql",
+    "dev-login": "npm run dev --workspace login -- -p 3001",
+    "dev-home": "npm run dev --workspace home -- -p 3002",
+    "dev-extrato": "npm run dev --workspace extrato -- -p 3003"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

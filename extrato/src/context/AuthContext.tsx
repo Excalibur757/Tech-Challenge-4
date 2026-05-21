@@ -19,16 +19,34 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("auth_token");
-    const storedUser = localStorage.getItem("auth_user");
-    if (storedToken) {
-      setToken(storedToken);
+  async function verificarAuth() {
+    try {
+      const data = await graphqlRequest(`
+        query {
+          verificarToken {
+            success
+            user {
+              email
+              nome
+            }
+          }
+        }
+      `);
+      
+      if (data.verificarToken.success) {
+        setToken("authenticated");
+        setUserName(data.verificarToken.user?.email || null);
+      }
+    } catch (error) {
+      setToken(null);
+      setUserName(null);
+    } finally {
+      setLoading(false);
     }
-    if (storedUser) {
-      setUserName(storedUser);
-    }
-    setLoading(false);
-  }, []);
+  }
+  
+  verificarAuth();
+}, []);
 
   function login(token: string, userName: string) {
     localStorage.setItem("auth_token", token);
@@ -37,12 +55,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUserName(userName);
   }
 
-  function logout() {
+  const logout = async () => {
+    await graphqlRequest(`
+      mutation {
+        logout {
+          success
+        }
+      }
+    `);
+
+    // limpa auth
     localStorage.removeItem("auth_token");
     localStorage.removeItem("auth_user");
+
+    // limpa cache dos extratos
+    localStorage.removeItem("extratos");
+
+    // limpa estados
     setToken(null);
     setUserName(null);
-  }
+
+    // redireciona
+    window.location.href =
+      "http://localhost:3001/";
+  };
 
   return (
     <AuthContext.Provider value={{ token, userName, loading, login, logout }}>
@@ -55,4 +91,17 @@ export function useAuth() {
   const ctx = useContext(AuthContext);
   if (!ctx) throw new Error("useAuth must be usado dentro do AuthProvider");
   return ctx;
+}
+
+async function graphqlRequest(query: string) {
+  const response = await fetch('http://localhost:3000/graphql', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include', 
+    body: JSON.stringify({ query })
+  });
+  
+  const result = await response.json();
+  if (result.errors) throw new Error(result.errors[0].message);
+  return result.data;
 }

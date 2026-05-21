@@ -1,27 +1,157 @@
-import { apiFetch } from "@/lib/api";
+const GRAPHQL_URL = 'http://localhost:3000/graphql';
+
+interface LoginStatus {
+  attempts: number;
+  remainingAttempts: number;
+  isLocked: boolean;
+  lockoutTimeRemaining: number;
+}
+
+async function graphqlRequest(query: string, variables?: any): Promise<any> {
+  const response = await fetch(GRAPHQL_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({ query, variables })
+  });
+
+  if (!response.ok) {
+    // Erro HTTP - isso é problema de servidor, não do usuário
+    console.error('[DEBUG] Erro HTTP:', response.status);
+    throw new Error('Erro interno do servidor. Tente novamente mais tarde.');
+  }
+
+  const result = await response.json();
+  
+  if (result.errors) {
+    const errorMessage = result.errors[0].message;
+    console.error('[DEBUG] GraphQL Error:', errorMessage);
+    throw new Error(errorMessage); 
+  }
+  
+  return result.data;
+}
+
+export async function getLoginStatus(email: string): Promise<LoginStatus> {
+  const query = `
+    query GetLoginStatus($email: String!) {
+      getLoginStatus(email: $email) {
+        attempts
+        remainingAttempts
+        isLocked
+        lockoutTimeRemaining
+      }
+    }
+  `;
+
+  const data = await graphqlRequest(query, { email });
+  return data.getLoginStatus;
+}
 
 export async function login(email: string, password: string) {
-  return apiFetch("/user/auth", {
-    method: "POST",
-    body: JSON.stringify({ email, password }),
-  });
-}
+  const query = `
+    mutation Login($email: String!, $senha: String!) {
+      login(email: $email, senha: $senha) {
+        success
+        message
+        user {
+          id
+          email
+          nome
+          ultimoAcesso
+        }
+        remainingAttempts
+        lockoutTimeRemaining
+      }
+    }
+  `;
 
-export async function register(data: any) {
-  return apiFetch("/user", {
-    method: "POST",
-    body: JSON.stringify(data),
-  });
-}
-
-export async function ensureUserExists() {
-  try {
-    await login("aluno@teste.com", "123456");
-  } catch (err) {
-    await register({
-      username: "Aluno",
-      email: "aluno@teste.com",
-      password: "123456",
-    });
+  const data = await graphqlRequest(query, { email, senha: password });
+  
+  if (!data?.login?.success) {
+    throw new Error(data?.login?.message || 'Erro ao fazer login');
   }
+
+  return {
+    user: data.login.user
+  };
+}
+
+export async function logout() {
+  const query = `
+    mutation Logout {
+      logout {
+        success
+        message
+      }
+    }
+  `;
+
+  await graphqlRequest(query);
+}
+
+export async function isAuthenticated() {
+  const query = `
+    query VerificarToken {
+      verificarToken {
+        success
+        user {
+          id
+          email
+          nome
+        }
+      }
+    }
+  `;
+
+  try {
+    const data = await graphqlRequest(query);
+    return data.verificarToken.success;
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function getMe() {
+  const query = `
+    query MeuPerfil {
+      meuPerfil {
+        id
+        email
+        nome
+        createdAt
+        ultimoAcesso
+      }
+    }
+  `;
+
+  try {
+    const data = await graphqlRequest(query);
+    return data.meuPerfil;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function cadastroService(
+  nome: string,
+  email: string,
+  senha: string
+) {
+  const query = `
+    mutation {
+      cadastro(
+        nome: "${nome}",
+        email: "${email}",
+        senha: "${senha}"
+      ) {
+        success
+        message
+      }
+    }
+  `;
+
+  return graphqlRequest(query);
 }

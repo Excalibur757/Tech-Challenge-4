@@ -1,0 +1,66 @@
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.bloco {
+  background: white;
+
+  padding: 20px;
+
+  border-radius: 12px;
+
+  border: 1px solid #d9d9d9;
+}
+
+.titulo {
+  margin-bottom: 16px;
+  color: blue;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 12px 0;
+
+  border-bottom: 1px solid #eee;
+
+  color: black
+}
+
+.descricao {
+  font-weight: 600;
+  color: #171717;
+}
+
+.data {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.valor {
+  font-weight: bold;
+}
+
+.positivo {
+  color: #1f9d55;
+}
+
+.negativo {
+  color: #d64545;
+}
+
+.empty {
+  background: white;
+
+  padding: 24px;
+
+  border-radius: 12px;
+
+  text-align: center;
+
+  color: black;
+}

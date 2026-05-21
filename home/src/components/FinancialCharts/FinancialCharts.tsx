@@ -4,7 +4,7 @@ import { palette } from '@/styles/theme/colors';
 import { radii } from '@/styles/theme/radii';
 import { spacing } from '@/styles/theme/spacing';
 import { fontSizes, fontWeights } from '@/styles/theme/typography';
-import { ExtratoMensalType } from '@/utils/transacao';
+import { ExtratoMensalType } from '@/types/!Extrato';
 
 interface GraficoProps {
   extratos: ExtratoMensalType;
@@ -12,8 +12,8 @@ interface GraficoProps {
 
 export default function Grafico({ extratos }: GraficoProps) {
   const calcularDadosGrafico = (extratos: ExtratoMensalType) => {
-    let saldo = 1250.50;
-    const dados = [{ mes: 'Inicial', saldo: 1250.50 }];
+    let saldo = 0;
+    const dados = [{ mes: 'Inicial', saldo: 0 }];
     
     // Processar do mais antigo ao mais recente
     const extratosOrdenados = [...extratos].reverse();

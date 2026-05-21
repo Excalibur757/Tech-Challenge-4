@@ -3,6 +3,7 @@ import Header from "@/components/Header/Header";
 import "../styles/globals.css"
 import { firaCode, inter } from "@/styles/fonts";
 import { AuthProvider } from "@/context/AuthContext";
+import { TransacaoProvider } from "@/context/transacao/TransacaoContext";
 
 export const metadata: Metadata = {
   title: "Bytebank",
@@ -22,10 +23,12 @@ export default function RootLayout({
       </head>
     <body className={`${inter.variable} ${firaCode.variable}`}>
       <AuthProvider>
+        <TransacaoProvider>
         <Header />
         <div className="containerClient">
           {children}
         </div>
+        </TransacaoProvider>
       </AuthProvider>
     </body>
     </html>

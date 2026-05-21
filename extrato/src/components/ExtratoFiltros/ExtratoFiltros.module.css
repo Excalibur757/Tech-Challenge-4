@@ -1,0 +1,21 @@
+.input,
+.select {
+  width: 100%;
+
+  padding: 12px 14px;
+
+  border-radius: 8px;
+
+  border: 1px solid #cbcbcb;
+
+  background: white;
+
+  margin-bottom: 12px;
+
+  color: #171717;
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+}
