@@ -151,6 +151,25 @@ cd Tech-Challenge-4
 npm install
 ```
 
+### 4. Acesse a pasta do backend
+
+```bash
+cd backend-graphql
+```
+
+### 5. Localize o arquivo .env.example que está no diretório
+
+### 6. Crie um novo arquivo chamado .env na mesma pasta:
+
+Se tiver no windows:
+```bash
+copy .env.example .env
+```
+
+Se tiver no linux:
+```bash
+cp .env.example .env
+```
 <br />
 
 # ▶️ Executando a aplicação
